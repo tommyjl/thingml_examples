@@ -1,0 +1,39 @@
+/**
+ * Date: 2017-02-24
+ *
+ * Kickdown to Java examples.
+ */
+
+import "../datatypes.thingml"
+
+thing Example {
+
+	property proptext : String = "Do you wanna build a snowman?"
+	
+	statechart ExampleChart init Default {
+		state Default {
+			on entry do
+				/* Methods */
+				'System.out.println("Elsa?");'
+				
+				/* Methods with properties */
+				'System.out.println('& proptext &');'
+				
+				/* Methods with variables */
+				var vartext : String = "Come on, let's go and play"
+				'System.out.println('& vartext &');'
+				
+				/* Multiple lines */
+				'
+					System.out.println("I never see you anymore");
+					System.out.println("Come out the door");
+					System.out.println("It\'s like you\'ve gone away");
+				'
+			end
+		}
+	}
+}
+
+configuration Misc {
+	instance ex : Example
+}
