@@ -1,0 +1,35 @@
+/**
+ * Date: 2017-02-22
+ */
+
+import "../datatypes.thingml"
+import "2_fragmentsssss.thingml"
+
+/**
+ * Define functions in a thing fragment with a descriptive name.
+ */
+thing fragment MyFunctions {
+	function hello()
+		print "With no power comes no responsibility.\n\n"
+}
+
+/**
+ * Remember to include the thing fragment.
+ */
+thing Example includes MyFunctions, ImportedFunctions {
+	
+	statechart ExampleChart init Default {
+		state Default {
+			on entry do
+				hello()
+				
+				//Imported functions break.
+				imported()
+			end
+		}
+	}
+}
+
+configuration Functions {
+	instance ex : Example
+}

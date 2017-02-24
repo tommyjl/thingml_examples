@@ -1,0 +1,61 @@
+/**
+ * Date: 2017-02-22
+ */
+
+import "../datatypes.thingml"
+
+thing Example {
+
+	/**
+	 * Functions can have one statement.
+	 *
+	 * Can also be on a single line:
+	 *     function hello() print "Hello, world.\n\n"
+	 */
+	function classic()
+		print "Hello, world.\n\n"
+	
+	/**
+	 * Or multiple statements.
+	 */
+	function greetings()
+	do
+		print "I used to be an adventurer like you,\n"
+		print  "then I took an arrow in the knee.\n\n"
+	end
+	 
+	/**
+	 * Functions can return values.
+	 */
+	function true_story_bro() : Boolean
+		return true
+	  
+	function cactusFact() : String
+		return "Ah, the cactus.\nTruly the most tsundere of plants.\n\n"
+
+	/**
+	 * Functions can contain variables.
+	 */
+	function variables()
+	do
+		var parrot : String = "The palindrome of 'Bolton' would be 'Notlob'.\n\n"
+		print parrot
+	end
+	
+	statechart ExampleChart init Default {
+		state Default {
+			on entry do
+				classic()
+				greetings()
+				if(true_story_bro())
+					print "The story checks out.\n\n"
+				print cactusFact()
+				variables()
+			end
+		}
+	}
+}
+
+configuration Functions {
+	instance ex : Example
+}

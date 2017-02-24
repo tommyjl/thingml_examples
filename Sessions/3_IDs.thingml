@@ -1,0 +1,65 @@
+/**
+ * This example adds to the previous example by adding IDs and giving one
+ * person a special message.
+ */
+
+import "../datatypes.thingml"
+
+thing Person {
+	
+	message newPerson(name:String);
+	message greet();
+	
+	internal port self {
+		sends newPerson
+		receives newPerson
+	}
+	
+	required port send {
+		sends greet
+	}
+	
+	provided port receive {
+		receives greet
+	}
+
+	property ID : Integer = 0
+	property name : String
+	
+	statechart PersonChart init Default {
+		state Default {
+			on entry do
+				self!newPerson("Graham Chapman")
+				self!newPerson("John Cleese")
+				self!newPerson("Terry Gilliam")
+				self!newPerson("Eric Idle")
+				self!newPerson("Terry Jones")
+				self!newPerson("Michael Palin")
+				
+				send!greet()
+			end
+			
+			internal event e : self?newPerson
+			action do
+				ID++
+				name = e.name
+				fork s
+			end
+		}
+		
+		session s init Greet {
+			state Greet {
+				on entry print "Hello, I'm " + name + ".\n"
+				
+				transition -> Greet
+				event receive?greet
+				action print "TEST!!!!\n"
+			}
+		}
+	}
+}
+
+configuration Sessions {
+	instance person : Person
+	connector person.send => person.receive
+}

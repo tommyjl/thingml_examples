@@ -1,0 +1,9 @@
+/**
+ * Date: 2017-02-22
+ * This file is part of the 2_fragments.thingml example.
+ */
+ 
+ thing fragment ImportedFunctions {
+ 	function imported()
+ 		print "Don't mention the war! I mentioned it once, but I think I got away with it all right.\n\n"
+ }

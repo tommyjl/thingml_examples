@@ -1,0 +1,49 @@
+import "../datatypes.thingml"
+
+thing fragment Ports {
+	message greet();
+	
+	required port ask {
+	}
+	
+	provided port asked {
+	}
+}
+
+thing Host includes Ports {
+	
+}
+
+thing Guest includes Ports {
+
+	message newGuest(name:String);
+	
+	internal port self {
+		sends newGuest
+		receives newGuest
+	}
+	
+	property id:Integer = 0
+	property name:String
+	
+	statechart GuestChart init Default {
+		state Default {
+			internal event e : self?newGuest
+			action do
+				name = e.name
+				fork s
+				id++
+			end
+		}
+		
+		session s init Greet {
+			state Greet {
+			}
+		}
+	}
+}
+
+configuration Sessions {
+	instance host : Host
+	instance guest : Guest
+}

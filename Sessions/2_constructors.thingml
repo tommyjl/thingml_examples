@@ -1,0 +1,51 @@
+/**
+ * This is an example of how multiple sessions can be instantiated.
+ * 
+ * Note that every new session makes a copy of the root's properties.
+ * I.e. sessions have their own local properties, and their values are
+ * initially the same as the root's property at the time fork was
+ * called.
+ */
+
+import "../datatypes.thingml"
+
+thing Person {
+	
+	message newPerson(name:String)
+	
+	internal port self {
+		sends newPerson
+		receives newPerson
+	}
+
+	property name : String
+	
+	statechart PersonChart init Default {
+		state Default {
+			on entry do
+				self!newPerson("Graham Chapman")
+				self!newPerson("John Cleese")
+				self!newPerson("Terry Gilliam")
+				self!newPerson("Eric Idle")
+				self!newPerson("Terry Jones")
+				self!newPerson("Michael Palin")
+			end
+			
+			internal event e : self?newPerson
+			action do
+				name = e.name
+				fork s
+			end
+		}
+		
+		session s init Greet {
+			state Greet {
+				on entry print "Hello, I'm " + name + ".\n"
+			}
+		}
+	}
+}
+
+configuration Sessions {
+	instance person : Person
+}

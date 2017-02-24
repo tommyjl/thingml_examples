@@ -1,0 +1,27 @@
+/**
+ * This is the most basic version of sessions. The two keywords are 'fork'
+ * and 'session'. The former creates a new session, the latter defines its
+ * behaviour.
+ */
+
+import "../datatypes.thingml"
+
+thing Person {
+	property name : String = "John"
+	
+	statechart PersonChart init Default {
+		state Default {
+			on entry fork s
+		}
+		
+		session s init Greet {
+			state Greet {
+				on entry print "Hello, " + name + ".\n"
+			}
+		}
+	}
+}
+
+configuration Sessions {
+	instance person : Person
+}

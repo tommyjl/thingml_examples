@@ -1,0 +1,98 @@
+/**
+ * Date: 2017-02-22
+ */
+
+import "../datatypes.thingml"
+import "2_fragmentsssss.thingml"
+
+/**
+ * Define functions in a thing fragment with a descriptive name.
+ */
+thing fragment MyFunctions {
+	function hello() print "With no power comes no responsibility.\n\n"
+}
+
+/**
+ * Remember to include the thing fragment.
+ */
+thing Example includes MyFunctions, ImportedFunctions {
+
+	function print_array(a : String[])
+	do
+		var i : Integer = 0
+		while(i < 3)
+		do
+			print a[i]
+			i++
+		end
+	end
+
+	function wilde() : String[]
+	do
+		var strs : String[3]
+		strs[0] = "The only thing to do with good advice is pass it on. It is never any use to oneself.\n"
+		strs[1] = "My own business always bores me to death; I prefer other people's.\n"
+		strs[2] = "I find it harder and harder every day to live up to my blue china.\n\n"
+		return strs
+	end
+	
+	function churchill() : String[]
+	do
+		var strs : String[3]
+		strs[0] = "I may be drunk, Miss, but in the morning I will be sober and you will still be ugly.\n"
+		strs[1] = "Success consists of going from failure to failure without loss of enthusiasm.\n"
+		strs[2] = "If you're going through hell, keep going.\n\n"
+		return strs
+	end
+	
+	function addArrays(v:Double[], w:Double[], n:Integer) : Double[]
+	do
+		var a : Double[n]
+		var i : Integer = 0
+		while(i < n) do
+			a[0] = v[0] + w[0]
+			i++
+		end
+		return a
+	end
+	
+	property prop : String[3]
+	
+	statechart ExampleChart init Default {
+		state Default {
+			on entry do
+				/**
+				 * Variables are fairly straight forward.
+				 */
+				var variable : String[] = churchill()
+				print_array(variable)
+				
+				
+				/**
+				 * Properties are not.
+				 * 
+				 * This is not allowed:
+				 *     property prop : String[] =  wilde()
+				 *     property prop : String[3] =  wilde()
+				 * 
+				 * This is not allowed:
+				 * prop = wilde()
+				 * 
+				 * But manually placing values works.
+				 */
+				var temp : String[] = wilde()
+				var i : Integer = 0
+				while(i < 3)
+				do
+					prop[i] = temp[i]
+					i++
+				end
+				print_array(prop)
+			end
+		}
+	}
+}
+
+configuration Functions {
+	instance ex : Example
+}
