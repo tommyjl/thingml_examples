@@ -1,0 +1,41 @@
+/**
+ * Date: 2017-02-24
+ * After installing a project in Maven, include the dependency with @maven_dep
+ * Use kickdown to use the code from the dependency.
+ *
+ * Objects can be defined as seen in the datatypes.thingml file.
+ *     object String
+ *     @type_checker "String"
+ *     @c_type "char *"
+ *     @c_byte_size "*"
+ *     @java_type "String"
+ *     @js_type "String"
+ *     @SenML_type "String";
+ */
+ 
+import "../datatypes.thingml"
+
+thing DependencyTest 
+@maven_dep "<dependency>
+<groupId>fooGroup</groupId>
+<artifactId>fooArtifact</artifactId>
+<version>1.0</version>
+</dependency>"
+{
+	// property fooObject1 : FooObject
+	
+	statechart DependencyTestChart init Test {
+		state Test {
+			on entry do
+				// 'fooMethod();'
+				
+				// fooObject = 'new FooObject()'
+				// ''& fooObject &'.fooMethod();'
+			end
+		}
+	}
+}
+
+configuration Misc {
+	instance ex : DependencyTest
+}
