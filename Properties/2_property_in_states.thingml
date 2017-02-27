@@ -1,0 +1,29 @@
+/**
+ * Date: 2017-02-27
+ * States can have properties.
+ */
+ 
+ import "../datatypes.thingml"
+
+thing Example {
+
+	property x : Integer = 1
+	
+	statechart ExampleChart init Main {
+	
+		state Main {
+			property x : Integer = 0
+			on entry print "x=" + x + "\n"
+			
+			transition -> State2
+		}
+		
+		state State2 {
+			on entry print "x=" + x + "\n"
+		}
+	}
+}
+
+configuration Example {
+	instance ex : Example
+}
