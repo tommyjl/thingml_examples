@@ -11,21 +11,21 @@
 
 thing Example includes PropertyFragment {
 	
-	property xs : String[max]
+	property strings : String[max]
 	
 	statechart ExampleChart init Main {
 	
 		state Main {
 			on entry
 			do
-				xs[0] = "Is this EZ mode?"
-				xs[1] = "Sigh, afk."
-				xs[2] = "The best things in life come in small packages!"
+				strings[0] = "Is this EZ mode?"
+				strings[1] = "Sigh, afk."
+				strings[2] = "The best things in life come in small packages!"
 				
 				var i : Integer = 0
 				while(i<max)
 				do
-					print xs[i] + "\n"
+					print strings[i] + "\n"
 					i++
 				end
 			end
