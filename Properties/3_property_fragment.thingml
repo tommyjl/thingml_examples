@@ -1,0 +1,38 @@
+/**
+ * Date: 2017-04-15
+ * Properties such as readonly attributes can be put in thing fragments.
+ */
+ 
+ import "../datatypes.thingml"
+ 
+ thing fragment PropertyFragment {
+ 	readonly property max : Integer = 3
+ }
+
+thing Example includes PropertyFragment {
+	
+	property xs : String[max]
+	
+	statechart ExampleChart init Main {
+	
+		state Main {
+			on entry
+			do
+				xs[0] = "Is this EZ mode?"
+				xs[1] = "Sigh, afk."
+				xs[2] = "The best things in life come in small packages!"
+				
+				var i : Integer = 0
+				while(i<max)
+				do
+					print xs[i] + "\n"
+					i++
+				end
+			end
+		}
+	}
+}
+
+configuration Example {
+	instance ex : Example
+}
